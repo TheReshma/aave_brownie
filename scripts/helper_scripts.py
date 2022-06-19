@@ -1,8 +1,7 @@
 from brownie import (
     accounts,
     config,
-    network,
-    interface
+    network
 )
 
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
@@ -19,13 +18,3 @@ def get_account(index=None, id=None):
     ):
         return accounts[0]
     return accounts.add(config["wallets"]["from_key"])
-
-def get_weth():
-    account = get_account()
-    weth = interface.IWeth(config["networks"][network.show_active()]["weth_token"])
-    tx = weth.deposit({"from": account, "value": 0.1 * 10**18})
-    print("Received 0.1 WETH")
-    return tx
-
-def main():
-    get_weth()
